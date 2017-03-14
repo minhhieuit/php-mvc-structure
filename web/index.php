@@ -1,18 +1,17 @@
 <?php
 /**
- * Index
+ * Main entry point for your website.
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
  * @version    1.0
- * @date       10/12/2016
-*/
+ */
 
-require_once("../boot/boot_module.php");
-$bootModule = new BootModule();
-$bootModule->Boot();
+require_once("../boot/bootmodule.php");
+BootModule::boot();
 
-// Bind service results to $output
-$output = $controller->Service();
-
-require_once(PATH_BASE . PATH_VIEW . "/_layout.php");
-?>
+// Render view
+if ($controller->useLayout) {
+    require_once(ROOT . PATH_VIEW . "/_layout.php");
+} else {
+    $controller->view();
+}

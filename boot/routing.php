@@ -1,26 +1,32 @@
 <?php
 /**
- * Routing
+ * Web routing.
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.0
- * @date       08/12/2016
+ * @version    1.1
 */
 
-global $controller, $webTitle;
+class Routing
+{
+    public static function init() {
+        global $controller, $webTitle;
 
-$webTitle = APP_TITLE;
+        if (isset($_GET['p'])) {
+            $page = str_replace("-", "", $_GET['p']);
 
-if (isset($_GET['p'])) {
-    $parameter = $_GET['p'];
-} else {
-    $parameter = "home";  
-}
+            $controller = ucfirst($page) . "Controller";
 
-$request = ucfirst($parameter) . "Controller";
-if (class_exists($request)) {
-    $controller = new $request();
-    $webTitle = $webTitle . " - " . $controller::$title;
-} else {
-    die("Controller not found.");
+            if (class_exists($controller)) {
+                $controller = new $controller();
+            } else {
+                $controller = new ErrorController();
+            }
+        }
+
+        if (!isset($page)) {
+            header("Location: /home");
+        }
+
+        $webTitle = APP_TITLE . " - " . $controller->title;
+    }
 }

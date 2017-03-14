@@ -3,57 +3,41 @@
  * AutoLoader registrations
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.0
- * @date       08/12/2016
+ * @version    1.1
  */
 
 function autoLoadClass($class) {
-    $path = PATH_BASE . PATH_CLASS . "/";
     $filename = strtolower($class) . '.php';
 
-    if(file_exists($path . $filename)) {
-        require_once($path . $filename);
+    if (preg_match('/.controller/i', $class)) {
+        checkAndInclude(PATH_CONTROLLER, $filename);
+    } else if (preg_match('/.service/i', $class)) {
+        checkAndInclude(PATH_SERVICE, $filename);
+    } else if (preg_match('/.viewmodel/i', $class)) {
+        checkAndInclude(PATH_VIEWMODEL, $filename);
+    } else if (preg_match('/.model/i', $class)) {
+        checkAndInclude(PATH_MODEL, $filename);
+    } else if (preg_match('/.api/i', $class)) {
+        checkAndInclude(PATH_API, $filename);
+    } else {
+        if (checkAndInclude(PATH_CLASS, $filename)) {
+            return;
+        }
+        if (checkAndInclude(PATH_HELPER, $filename)) {
+            return;
+        }
     }
+    
+    Log::warn("Couldn't find class. ($filename)", __CLASS__, __FILE__, __FUNCTION__, __LINE__);
 }
 
-function autoLoadController($class) {
-    $path = PATH_BASE . PATH_CONTROLLER . "/";
-    $filename = str_replace("controller", "_controller", strtolower($class)) . '.php';
-
-    if(file_exists($path . $filename)) {
-        require_once($path . $filename);
-    }
-}
-
-function autoLoadInterface($class) {
-    $path = PATH_BASE . PATH_INTERFACE . "/";
-    $filename = strtolower($class) . '.php';
-
-    if(file_exists($path . $filename)) {
-        require_once($path . $filename);
-    }
-}
-
-function autoLoadModel($class) {
-    $path = PATH_BASE . PATH_MODEL . "/";
-    $filename = str_replace("model", "_model", strtolower($class)) . '.php';
-
-    if(file_exists($path . $filename)) {
-        require_once($path . $filename);
-    }
-}
-
-function autoLoadService($class) {
-    $path = PATH_BASE . PATH_SERVICE . "/";
-    $filename = str_replace("service", "_service", strtolower($class)) . '.php';
-
-    if(file_exists($path . $filename)) {
-        require_once($path . $filename);
+function checkAndInclude($folder, $filename) {
+    if (file_exists(ROOT . $folder . "/" . $filename)) {
+        require(ROOT . $folder . "/" . $filename);
+        return true;
+    } else {
+        return false;
     }
 }
 
 spl_autoload_register('autoLoadClass');
-spl_autoload_register('autoLoadController');
-spl_autoload_register('autoLoadInterface');
-spl_autoload_register('autoLoadModel');
-spl_autoload_register('autoLoadService');

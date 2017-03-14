@@ -1,27 +1,34 @@
 <?php
 /**
- * Database
+ * Connects to the database.
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.0
- * @date       08/12/2016
-*/
+ * @version    1.1
+ */
 
-class Database {
-    private static $instance = null;
+class Database
+{
+    private static $instance;
 
     private function __construct() {}
 
+    private function __destruct() {
+        if (isset(self::$instance)) {
+            // Close your connection here
+            unset(self::$instance);
+        }
+    }
+
     private function __clone() {}
 
-    public static function get() {
+    public static function db() {
         if (!isset(self::$instance)) {
-            $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
             try {
-                self::$instance = new PDO('mysql:host=localhost;dbname=DBNAME', 'DBUSER', 'DBPASSWORD', $pdo_options);
+                self::$instance = null; // Replace this with your connection expression
             }
-            catch(PDOException $ex) {
-                die("Connection to the database failed.");
+            catch (Exception $exception) {
+                Log::error($exception, __CLASS__, __FILE__, __FUNCTION__, __LINE__);
+                return false;
             }
         }
         return self::$instance;
