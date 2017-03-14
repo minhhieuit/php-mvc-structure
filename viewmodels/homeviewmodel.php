@@ -1,4 +1,6 @@
 <?php
-class HomeViewModel {
+class HomeViewModel
+{
     public $welcome;
+    public $number;
 }

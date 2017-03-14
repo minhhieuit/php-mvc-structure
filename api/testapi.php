@@ -1,12 +1,12 @@
 <?php
 /**
- * Testing API
+ * Sample API.
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
  * @version    1.0
  */
 
-class GetReservierungenAPI extends API
+class TestAPI extends API
 {
     public function api() {
         $result["testing"] = "Just a test.";

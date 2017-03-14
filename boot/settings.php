@@ -1,10 +1,10 @@
 <?php
 /**
- * Web settings.
+ * Application settings.
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
  * @version    1.1
-*/
+ */
 
 /**
  * Title of your website.

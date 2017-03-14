@@ -4,7 +4,7 @@
  * Runs service and displays view.
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.1
+ * @version    1.1.1
  **/
 
 class Controller
@@ -41,20 +41,18 @@ class Controller
      **/
     public function view() {
         // Access to global variables
-        global $pageTitle, $model, $links;
+        global $pageTitle, $webTitle;
 
         $model = $this->service();
 
         if (!isset($this->view)) {
             Log::error("View is not set.", __CLASS__, __FILE__, __FUNCTION__, __LINE__);
-            $this->title = "Error";
-            $this->view = "error";
+            $this->error();
             return;
         }
         if (is_null($this->view)) {
             Log::error("View is null.", __CLASS__, __FILE__, __FUNCTION__, __LINE__);
-            $this->title = "Error";
-            $this->view = "error";
+            $this->error();
             return;
         }
 
@@ -62,9 +60,7 @@ class Controller
 
         if (!file_exists($file)) {
             Log::error("View file does not exist. ($file)", __CLASS__, __FILE__, __FUNCTION__, __LINE__);
-            $this->title = "Error";
-            $this->view = "error";
-            $file = $this->getFileName($this->view);
+            $this->error();
             return;
         }
         
@@ -73,8 +69,19 @@ class Controller
 
     /**
      * This will be run before the view is displayed.
+     * Is only responsible for calling functions from service classes and binding results to viewmodels.
      **/
     public function service() {}
+
+    /**
+     * Renders error page.
+     **/
+    private function error() {
+        $this->title = "Error";
+        $this->view = "error";
+        $file = $this->getFileName($this->view);
+        require_once($file);
+    }
 
     /**
      * Gets JavaScript files / code from the controller and returns a string which can be embedded into the view.

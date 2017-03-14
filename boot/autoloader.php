@@ -3,7 +3,7 @@
  * AutoLoader registrations
  *
  * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.1
+ * @version    1.1.1
  */
 
 function autoLoadClass($class) {
@@ -11,14 +11,19 @@ function autoLoadClass($class) {
 
     if (preg_match('/.controller/i', $class)) {
         checkAndInclude(PATH_CONTROLLER, $filename);
+        return;
     } else if (preg_match('/.service/i', $class)) {
         checkAndInclude(PATH_SERVICE, $filename);
+        return;
     } else if (preg_match('/.viewmodel/i', $class)) {
         checkAndInclude(PATH_VIEWMODEL, $filename);
+        return;
     } else if (preg_match('/.model/i', $class)) {
         checkAndInclude(PATH_MODEL, $filename);
+        return;
     } else if (preg_match('/.api/i', $class)) {
         checkAndInclude(PATH_API, $filename);
+        return;
     } else {
         if (checkAndInclude(PATH_CLASS, $filename)) {
             return;
