@@ -41,9 +41,7 @@ class Controller
      **/
     public function view() {
         // Access to global variables
-        global $pageTitle, $webTitle;
-
-        $model = $this->service();
+        global $pageTitle, $webTitle, $model;
 
         if (!isset($this->view)) {
             Log::error("View is not set.", __CLASS__, __FILE__, __FUNCTION__, __LINE__);
