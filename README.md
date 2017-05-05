@@ -1,7 +1,7 @@
 # php-mvc-structure
 
 ## Info
-Please note that this project is still a **work-in-progress**. There are a few bugs and code is sometime really messy (e.g. autoloader script).
+Please note that this project is still a **work-in-progress**. There are a few bugs and code is sometimes really messy (e.g. autoloader script).
 
 ## Description
 This project allows you to have an **MVC** (**M**odel, **V**iew, **C**ontroller) structure in PHP.
