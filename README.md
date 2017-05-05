@@ -1,5 +1,8 @@
 # php-mvc-structure
 
+## Info
+Please note that this project is still a **work-in-progress**. There are a few bugs and code is sometime really messy (e.g. autoloader script).
+
 ## Description
 This project allows you to have an **MVC** (**M**odel, **V**iew, **C**ontroller) structure in PHP.
 The script uses controllers to bind service variables to (view)models and then renders the view including these viewmodels.
@@ -18,7 +21,6 @@ The script uses controllers to bind service variables to (view)models and then r
 
 ## Classes and components
 ### API
-
 API classes inherit the base class __API__ and should be named like this: **[a-z0-9]api.php**
 
 ### BootModule
