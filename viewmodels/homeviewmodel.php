@@ -1,4 +1,6 @@
 <?php
+namespace app\viewmodels;
+
 class HomeViewModel
 {
     public $welcome;

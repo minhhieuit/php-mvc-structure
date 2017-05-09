@@ -1,10 +1,12 @@
 <?php
+namespace app\boot;
+
 /**
  * This module is responsible for booting all the required scripts.
  *
- * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.1
-*/
+ * @author     Serhan Polat
+ * @version    2.0
+ */
 
 class BootModule
 {
@@ -12,28 +14,23 @@ class BootModule
 
     private function __clone() {}
 
-    public static function load() {
-        global $time;
-        require_once("settings.php");
+    private static function load()
+    {
+        require_once("config.php");
+        require_once("constants.php");
         require_once("autoloader.php");
-        require_once("database.php");
     }
 
-    public static function init() {
-        require_once("session.php");
-        Session::start();
-        Session::refresh();
-    }
-
-    public static function routing() {
-        require_once("routing.php");
-        global $controller, $webTitle;
+    private static function init()
+    {
+        $session = new Session();
+        $session->refresh();
         Routing::init();
     }
 
-    public static function boot() {
+    public static function boot()
+    {
         self::load();
         self::init();
-        self::routing();
     }
 }

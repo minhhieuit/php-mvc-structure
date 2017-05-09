@@ -1,48 +1,31 @@
 <?php
+namespace app\boot;
+
 /**
- * AutoLoader registrations
+ * Simple autoloader which loads classes.
  *
- * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.1.1
+ * @author     Serhan Polat
+ * @version    2.0
  */
 
-function autoLoadClass($class) {
-    $filename = strtolower($class) . '.php';
+spl_autoload_register(function ($class) {
+    // namespace prefix
+    $namespacePrefix = "app/";
 
-    if (preg_match('/.controller/i', $class)) {
-        checkAndInclude(PATH_CONTROLLER, $filename);
-        return;
-    } else if (preg_match('/.service/i', $class)) {
-        checkAndInclude(PATH_SERVICE, $filename);
-        return;
-    } else if (preg_match('/.viewmodel/i', $class)) {
-        checkAndInclude(PATH_VIEWMODEL, $filename);
-        return;
-    } else if (preg_match('/.model/i', $class)) {
-        checkAndInclude(PATH_MODEL, $filename);
-        return;
-    } else if (preg_match('/.api/i', $class)) {
-        checkAndInclude(PATH_API, $filename);
-        return;
-    } else {
-        if (checkAndInclude(PATH_CLASS, $filename)) {
-            return;
-        }
-        if (checkAndInclude(PATH_HELPER, $filename)) {
-            return;
-        }
-    }
-    
-    Log::warn("Couldn't find class. ($filename)", __CLASS__, __FILE__, __FUNCTION__, __LINE__);
-}
+    // base directory for the namespace prefix
+    $baseDir = ROOT;
 
-function checkAndInclude($folder, $filename) {
-    if (file_exists(ROOT . $folder . "/" . $filename)) {
-        require(ROOT . $folder . "/" . $filename);
-        return true;
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $baseDir . str_replace('\\', '/', $class) . '.php';
+    $file = str_replace($namespacePrefix, "", $file);
+
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
     } else {
+        echo "Couldn't find requested page.";
         return false;
     }
-}
-
-spl_autoload_register('autoLoadClass');
+});

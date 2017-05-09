@@ -1,36 +1,44 @@
 <?php
+namespace app\boot;
+
 /**
- * Connects to the database.
+ * Establishes a database connection or gets instance of current connection.
  *
- * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.1
- */
+ * @author     Serhan Polat
+ * @version    2.0
+*/
 
 class Database
 {
-    private static $instance;
+    private static $_instance;
 
     private function __construct() {}
 
-    private function __destruct() {
-        if (isset(self::$instance)) {
-            // Close your connection here
-            unset(self::$instance);
-        }
-    }
+    private function __destruct() {}
 
     private function __clone() {}
 
-    public static function db() {
-        if (!isset(self::$instance)) {
+    public static function get()
+    {
+        if (!isset(self::$_instance)) {
             try {
-                self::$instance = null; // Replace this with your connection expression
+                // TODO: Store credentials in a safe environment.
+                self::$_instance = new PDO('mysql:host=localhost;dbname=rocketgarage;charset=utf8', 'root', '');
+                self::$_instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                self::$_instance->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             }
-            catch (Exception $exception) {
-                Log::error($exception, __CLASS__, __FILE__, __FUNCTION__, __LINE__);
-                return false;
+            catch (PDOException $ex) {
+                die("<b>Database connection failed.</b><br/>Please contact an administrator.");
             }
         }
-        return self::$instance;
+        return self::$_instance;
+    }
+
+    public static function destroy()
+    {
+        if (isset(self::$_instance)) {
+            // Close connection
+            self::$_instance = null;
+        }
     }
 }

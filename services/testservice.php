@@ -1,14 +1,17 @@
 <?php
+namespace app\services;
+
 /**
  * Sample service class
  * 
- * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.0
+ * @author     Serhan Polat
+ * @version    2.0
  */
 
 class TestService
 {
-    public function division($a, $b) {
+    public function division($a, $b)
+    {
         if ($b > 0) {
             $result = $a / $b;
         } else {

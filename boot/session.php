@@ -1,9 +1,11 @@
 <?php
+namespace app\boot;
+
 /**
  * Starts, destroys and regenerates session.
  * 
- * @author     Serhan Polat <kontakt@serhanp.de>
- * @version    1.0
+ * @author     Serhan Polat
+ * @version    2.0
  */
 
 class Session
@@ -11,30 +13,29 @@ class Session
     /**
      * Refresh / regenerate interval in seconds
      */
-    public static $refreshInterval = 1800;
+    public $refreshInterval = 900;
 
-    private function __construct() {}
+    function __construct() {}
 
-    private function __clone() {}
+    function __clone() {}
 
-    public static function start() {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-    }
-
-    public static function destroy() {
+    public function destroy()
+    {
         session_unset();
         session_destroy();
     }
 
-    public static function refresh() {
-        if (isset($_SESSION['created'])) {
-            if (time() - $_SESSION['created'] > self::$refreshInterval) {
+    public function refresh()
+    {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        if (isset($_SESSION['session_created'])) {
+            if (TIME - $_SESSION['session_created'] > $this->refreshInterval) {
                 session_regenerate_id();
             }
         } else {
-            $_SESSION['created'] = time();
+            $_SESSION['session_created'] = TIME;
         }
     }
 }
