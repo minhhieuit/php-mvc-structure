@@ -24,8 +24,5 @@ spl_autoload_register(function ($class) {
     // if the file exists, require it
     if (file_exists($file)) {
         require $file;
-    } else {
-        echo "Couldn't find requested page.";
-        return false;
     }
 });

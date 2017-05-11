@@ -5,7 +5,7 @@ namespace app\controllers;
  * Controller base class
  *
  * @author     Serhan Polat
- * @version    2.0
+ * @version    2.1
  */
 
 class ControllerBase
@@ -34,6 +34,8 @@ class ControllerBase
     public function render($view = "home/index", $title = "Home", $model = null, $useLayout = true)
     {
         $file = ROOT . PATH_VIEWS . "/" . $view . ".php";
+
+        $javaScript = $this->getJavaScript();
         
         if ($useLayout) {
             require_once(ROOT . PATH_VIEWS . "/shared/_layout.php");

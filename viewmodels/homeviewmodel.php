@@ -5,4 +5,5 @@ class HomeViewModel
 {
     public $welcome;
     public $number;
+    public $foo;
 }

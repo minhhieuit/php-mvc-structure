@@ -8,9 +8,10 @@
         <ul>
             <li><a href="/home">Home</a>
                 <ul><li><a href="/home/test">Test</a></li></ul></li>
-            <li><a href="/about">About</a></li>
+                <ul><li><a href="/home/test/itworks">Test (with parameter)</a></li></ul></li>
             <li><a href="/contact">Contact</a></li>
         </ul>
         <?php require_once($file); ?>
+        <?php echo $javaScript; ?>
     </body>
 </html>
