@@ -5,21 +5,11 @@ namespace app\controllers;
  * Controller base class
  *
  * @author     Serhan Polat
- * @version    2.1
+ * @version    2.1.1
  */
 
 class ControllerBase
 {
-    /**
-     * Title of the page.
-     */
-    public $title;
-    
-    /**
-     * Array of JavaScript files which should be included with this page controller.
-     */    
-    public $javaScriptFiles = [];
-    
     function __construct() {}
 
      /**
@@ -35,26 +25,10 @@ class ControllerBase
     {
         $file = ROOT . PATH_VIEWS . "/" . $view . ".php";
 
-        $javaScript = $this->getJavaScript();
-        
         if ($useLayout) {
             require_once(ROOT . PATH_VIEWS . "/shared/_layout.php");
         } else {
             require_once($file);
         }
-    }
-
-    /**
-     * Returns HTML code which contains JS embeds.
-     * 
-     * @return string
-     */
-    public function getJavaScript()
-    {
-        $result = "";
-        foreach ($this->javaScriptFiles as $script) {
-            $result .= "<script src='" . $script . "'></script>";
-        }
-        return $result;
     }
 }

@@ -12,6 +12,5 @@
             <li><a href="/contact">Contact</a></li>
         </ul>
         <?php require_once($file); ?>
-        <?php echo $javaScript; ?>
     </body>
 </html>
